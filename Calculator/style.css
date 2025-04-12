@@ -1,0 +1,115 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: auto;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+    background-color: white;
+}
+
+#header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+#text-el {
+    padding: 0;
+    background-color: transparent;
+    color: brown;
+    height: 150px;
+    width: 90%;
+    border: none;
+    text-align: right;
+    font-size: 40px;
+}
+
+#answerContainer {
+    background-color: rgba(147, 133, 106, 0.052);
+    width: 90%;
+    height: 80px;
+    padding: 10px 10px;
+    margin: 10px 0;
+    text-align: right;
+    font-size: 30px;
+    font-weight: bolder;
+    color: rgba(185, 88, 88, 0.808);
+}
+
+#error {
+    color: red;
+}
+
+#opt-el {
+    width: 90%;
+    padding-bottom: 30px;
+    margin: 30px 10px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
+}
+
+#leftIcon {
+    width: 100%;
+}
+
+#calculatorImg, #history, #delete{
+    width: 30px;
+    cursor: pointer;
+}
+
+button {
+    width: 90px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    border: none;
+    background-color: rgb(186, 170, 105);
+    font-weight: bolder;
+    font-size: 1.5em;
+    text-align: center;
+    cursor: pointer;
+}
+
+#footer {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 100%;
+    padding: 8px 0;
+}
+
+.footerSec {
+    display: flex;
+    align-content: space-evenly;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+#reset {
+    color: red;
+}
+
+.brownColor {
+    color: brown;
+}
+
+.greyColor {
+    color: rgb(73, 126, 172);
+    font-size: 2em;
+}
+
+#equals {
+    color: white;
+    font-size: 2.5em;
+    background-color: rgb(73, 126, 172);
+}

@@ -1,0 +1,10 @@
+1. When you click on C, it clears the whole input in the input page
+2. when you click on bracket it displays the "(" in the input first but if you click on the bracket after the input a figure, it will take the bracket as multiplication and solve whatever is in the bracket first before solving what is outside the bracket. After displaying the "(" following a number, if you click it agin, it display the ")".
+3. When you click the "%", after a number, it divides the number by 100
+4. When "/" is clicked, it means division. The number before "/" is divided by the number after it.
+5. When "*" is clicked, it means multiplication. The number before `*` is multiplied by the number after it.
+6. When "+" is clicked, it means addition. The number before "+" is added to the number after it.
+7. When "-" is clicked, it means subtraction. The number before "-" subtracts the number after it.
+8. The "=" sign when clicked, the evaluation of the expected calculation takes place and moved the solution up the region where the calculation is been initiated.
+9. When "+/-" is clicked it modify the figure, that is....if the figure as no minus, it adds minus when clicked, likewise if the fure as no plus it adds plus when clicked.
+10. When the figures are clicked, it displays the respective number that is been clicked.
