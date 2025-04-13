@@ -25,11 +25,14 @@ let deletes = document.getElementById('delete')
 let buttons = document.querySelectorAll('button')
 let justEvaluated = false
 let errorEffect = false
+let evaluatedColor = false
+let activeParenthesis = false
+let activePercentage = false
 
 
 // Helper Function: To check if the value clicked is an operator
 function isOperator(char) {
-    return ["+", "-", "*", "/", "%"].includes(char)
+    return ["+", "-", "*", "/", "%", "()"].includes(char)
 }
 
 
@@ -37,7 +40,7 @@ buttons.forEach(button =>{
     button.addEventListener('click', function(){
         let value = button.textContent
 
-        let validInput = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "-", "+", "*", "/", "%", "(", ")"]
+        let validInput = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "-", "+", "*", "/"]
         
 
         if (value === "C") {
@@ -46,8 +49,13 @@ buttons.forEach(button =>{
             answer.textContent = ""
             justEvaluated = false
             errorEffect = false
+            evaluatedColor = false
+            activePercentage = false
+            activeParenthesis = false
         }
         else if (value === "="){
+            activePercentage = false
+            activeParenthesis = false
             try {
                 let result = eval(textValue.join(""))
                 textEl.value = result
@@ -56,7 +64,7 @@ buttons.forEach(button =>{
                 console.log(textValue);
                 justEvaluated = true
                 errorEffect = false
-                textEl.setAttribute('class', 'activeAnswer')
+                evaluatedColor = true
             } catch (error) {
                 textEl.value = ""
                 textValue = []
@@ -64,10 +72,13 @@ buttons.forEach(button =>{
                 console.log(textValue);
                 justEvaluated = false
                 errorEffect = true
+                evaluatedColor = false
             }
         }
         else if (validInput.includes(value)) {
-
+            evaluatedColor = false
+            activePercentage = false
+            activeParenthesis = false
             if (justEvaluated === true) {
                 if (!isOperator(value)) {
                     textValue = [value]
@@ -77,8 +88,9 @@ buttons.forEach(button =>{
                     textEl.value += value
                 }
                 justEvaluated = false
+                
             }
-            else {  
+            else {
                 textValue.push(value)
                 textEl.value += value
             }
@@ -93,11 +105,40 @@ buttons.forEach(button =>{
                 }
                 errorEffect = false
             }
+        } 
+
+        else if (value === "()") {
+            textValue.push("*")
+            let expression = textValue.join("")
+            textEl.value += value
+            let result = eval(expression)
+            answer.textContent = result
+            // textValue = [result.toString()]
+            activeParenthesis = true
+            console.log(textValue);
         }
+
+        else if (value === "%") {
+            textValue.push("/", "100")
+            let expression = textValue.join("")
+            textEl.value += value
+            let result = eval(expression)
+            answer.textContent = result
+            activePercentage = true
+            console.log(textValue);
+        }
+
         if (errorEffect === true) {
             answer.setAttribute('id', 'error')
         } else {
             answer.removeAttribute('id', 'error')
+        }
+
+        // An active color of the evaluated answer
+        if (evaluatedColor === true) {
+            textEl.style.color = "rgb(73, 126, 172)"
+        } else {
+            textEl.style.color = "brown"
         }
     })
 })
@@ -105,10 +146,27 @@ buttons.forEach(button =>{
 
 // Delete handlings
 deletes.addEventListener('click', function(){
-    textValue.pop()
+    if (activePercentage === true) {
+        textValue.pop()
+        textValue.pop()
+        let result = textValue.join("")
+        activePercentage = false
+        activeParenthesis = false
+        console.log(textValue);
+
+    } else if (activePercentage === false) {
+        // if (!isOperator(percentage.textContent)) {
+        //     textValue.pop()
+        //     console.log(textValue);
+        // } else {
+        //     textValue.pop()
+        //     textValue.pop()
+        // }
+        textValue.pop()
+        console.log(textValue);
+    }
     let deleteValue = textValue.join("")
     textEl.value = deleteValue
-    console.log(textValue);
 
     try {
         let result = eval(deleteValue)
