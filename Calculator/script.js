@@ -41,7 +41,7 @@ buttons.forEach(button =>{
         let value = button.textContent
 
         let validInput = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "-", "+", "*", "/"]
-        
+        let result = textValue.join("")
 
         if (value === "C") {
             textValue = []
@@ -86,7 +86,6 @@ buttons.forEach(button =>{
                     textEl.value += value
                 }
                 justEvaluated = false
-                
             }
             else {
                 textValue.push(value)
@@ -94,18 +93,21 @@ buttons.forEach(button =>{
             }
 
             if (!isOperator(value)) {
+
+                if (activePercentage === true) {
+                    // textValue.push("*", value)7
+                    // let evaluate = eval(result)
+                    // textValue = [evaluate.toString()]
+                    console.log(textValue);
+                }
                 try {
-                    let expression = textValue.join("")
-                    let result = eval(expression)
-                    answer.textContent = result
+                    result = textValue.join("")
+                    let expression = eval(result)
+                    answer.textContent = expression
                 } catch (error) {
                     answer.textContent = ""
                 }
                 errorEffect = false
-            }
-
-            if (activePercentage === true) {
-                
             }
         } 
 
@@ -134,18 +136,14 @@ buttons.forEach(button =>{
         }
 
         else if (value === "%") {
-            let lastChar = textValue[textValue.length - 1]
-
-            // To ensure that if the "%" is clicked once, it isn't clicked again till a number is inputed
-            if (/\d/.test(lastChar)) {
-                textValue.push("/", "100")
-                textEl.value += "%"
-                activePercentage = true
-                let result = textValue.join("")
+            // textValue.push("/", "100")
+                textEl.value += value
+                textValue.push("%")
+                let result = textValue.replace("%", "/ 100")
+                result = textValue.join("")
                 let evaluate = eval(result)
                 answer.textContent = evaluate
                 console.log(textValue);
-            }
         }
 
         if (errorEffect === true) {
