@@ -28,7 +28,7 @@ let errorEffect = false
 let evaluatedColor = false
 let activeParenthesis = false
 let activePercentage = false
-
+let openBracket = true
 
 // Helper Function: To check if the value clicked is an operator
 function isOperator(char) {
@@ -77,8 +77,6 @@ buttons.forEach(button =>{
         }
         else if (validInput.includes(value)) {
             evaluatedColor = false
-            activePercentage = false
-            activeParenthesis = false
             if (justEvaluated === true) {
                 if (!isOperator(value)) {
                     textValue = [value]
@@ -105,27 +103,49 @@ buttons.forEach(button =>{
                 }
                 errorEffect = false
             }
+
+            if (activePercentage === true) {
+                
+            }
         } 
 
         else if (value === "()") {
-            textValue.push("*")
-            let expression = textValue.join("")
-            textEl.value += value
-            let result = eval(expression)
-            answer.textContent = result
-            // textValue = [result.toString()]
-            activeParenthesis = true
-            console.log(textValue);
+            if (openBracket === true) {
+                if (/\d|\)/.test(textValue[textValue.length - 1])) {
+                    textValue.push("*")
+                }
+
+                textValue.push("(")
+                textEl.value += "("
+            } 
+            else {
+                textValue.push(")")
+                textEl.value += (")")
+            }
+
+            openBracket = !openBracket
+
+            try {
+                let result = textValue.join("")
+                answer.textContent = result
+            } catch (error) {
+                answer.textContent = ""
+            }
         }
 
         else if (value === "%") {
-            textValue.push("/", "100")
-            let expression = textValue.join("")
-            textEl.value += value
-            let result = eval(expression)
-            answer.textContent = result
-            activePercentage = true
-            console.log(textValue);
+            let lastChar = textValue[textValue.length - 1]
+
+            // To ensure that if the "%" is clicked once, it isn't clicked again till a number is inputed
+            if (/\d/.test(lastChar)) {
+                textValue.push("/", "100")
+                textEl.value += "%"
+                activePercentage = true
+                let result = textValue.join("")
+                let evaluate = eval(result)
+                answer.textContent = evaluate
+                console.log(textValue);
+            }
         }
 
         if (errorEffect === true) {
@@ -149,22 +169,23 @@ deletes.addEventListener('click', function(){
     if (activePercentage === true) {
         textValue.pop()
         textValue.pop()
-        let result = textValue.join("")
         activePercentage = false
-        activeParenthesis = false
         console.log(textValue);
 
-    } else if (activePercentage === false) {
-        // if (!isOperator(percentage.textContent)) {
-        //     textValue.pop()
-        //     console.log(textValue);
-        // } else {
-        //     textValue.pop()
-        //     textValue.pop()
-        // }
+    } else {
         textValue.pop()
         console.log(textValue);
     }
+
+    // let last = textValue.pop()
+
+    // if (last === "(") {
+    //     openBracket = true
+    // } else if (last === ")") {
+    //     openBracket = false
+    // }
+
+
     let deleteValue = textValue.join("")
     textEl.value = deleteValue
 
