@@ -169,19 +169,15 @@ buttons.forEach(button =>{
 deletes.addEventListener('click', function(){
     if (activePercentage === true) {
 
-        // let backspace = textValue.pop("*")
-
-        // if (backspace === true) {
-
-        // }
         textValue.pop()
         // Accessing the second to the last value of the array
         let lastIndex = textValue.length - 1;
         let decimal = textValue[lastIndex]
-        let result = (Number(decimal) * 100)
-        let expression = result.toString()
+        let result = (Number(decimal) * 100.00001)
+        let results = Math.floor(result)
+        let expression = results.toString()
         textValue = [expression]
-        textEl.value = result
+        textEl.value = results
         let calculation = eval(textValue.join(""))
         answer.textContent = calculation
         activePercentage = false
@@ -189,6 +185,10 @@ deletes.addEventListener('click', function(){
         console.log(textValue);
         
     } else {
+        let deletedPercentage = textValue.pop("*")
+        if (deletedPercentage === true) {
+
+        }
         textValue.pop()
         let deleteValue = textValue.join("")
         textEl.value = deleteValue
