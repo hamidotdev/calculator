@@ -77,6 +77,7 @@ buttons.forEach(button =>{
         }
         else if (validInput.includes(value)) {
             evaluatedColor = false
+            activePercentage = false
             if (justEvaluated === true) {
                 if (!isOperator(value)) {
                     textValue = [value]
@@ -90,22 +91,13 @@ buttons.forEach(button =>{
             else {
                 textValue.push(value)
                 textEl.value += value
-                // console.log(textValue);
-                
             }
 
             if (!isOperator(value)) {
-
-                // if (activePercentage === true) {
-                //     result = textValue.join("")
-                //     textValue = [result.toString()]
-                //     console.log(textValue);
-                // }
                 try {
                     result = textValue.join("")
                     let expression = eval(result)
                     answer.textContent = expression
-                    // console.log(result);
                 } catch (error) {
                     answer.textContent = ""
                 }
@@ -185,22 +177,24 @@ deletes.addEventListener('click', function(){
         console.log(textValue);
         
     } else {
-        let deletedPercentage = textValue.pop("*")
-        if (deletedPercentage === true) {
-
+        let lastIndex = textValue[textValue.length - 1]
+        if (textValue.length === 1) {
+            textValue[textValue.length - 1] = lastIndex.slice(0, -1)
+            console.log(textValue);
+        } else {
+            textValue.pop()
+            console.log(textValue);
         }
-        textValue.pop()
         let deleteValue = textValue.join("")
         textEl.value = deleteValue
-        console.log(textValue);
         try {
             let result = eval(deleteValue)
             answer.textContent = result
         } catch (error) {
             answer.textContent = ""
         }
+        console.log(deleteValue);
     }
-    console.log(textEl.value);
 
 
 
