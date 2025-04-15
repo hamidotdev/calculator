@@ -90,20 +90,22 @@ buttons.forEach(button =>{
             else {
                 textValue.push(value)
                 textEl.value += value
+                // console.log(textValue);
+                
             }
 
             if (!isOperator(value)) {
 
-                if (activePercentage === true) {
-                    // textValue.push("*", value)7
-                    // let evaluate = eval(result)
-                    // textValue = [evaluate.toString()]
-                    console.log(textValue);
-                }
+                // if (activePercentage === true) {
+                //     result = textValue.join("")
+                //     textValue = [result.toString()]
+                //     console.log(textValue);
+                // }
                 try {
                     result = textValue.join("")
                     let expression = eval(result)
                     answer.textContent = expression
+                    // console.log(result);
                 } catch (error) {
                     answer.textContent = ""
                 }
@@ -136,14 +138,15 @@ buttons.forEach(button =>{
         }
 
         else if (value === "%") {
-            // textValue.push("/", "100")
-                textEl.value += value
-                textValue.push("%")
-                let result = textValue.replace("%", "/ 100")
-                result = textValue.join("")
-                let evaluate = eval(result)
-                answer.textContent = evaluate
-                console.log(textValue);
+            activePercentage = true
+            textValue.push("/ 100")
+            result = textValue.join("")
+            let evaluate = eval(result)
+            textEl.value += value
+            answer.textContent = evaluate
+            textValue = [evaluate.toString()]
+            textValue.push("*")
+            console.log(textValue);
         }
 
         if (errorEffect === true) {
@@ -165,15 +168,52 @@ buttons.forEach(button =>{
 // Delete handlings
 deletes.addEventListener('click', function(){
     if (activePercentage === true) {
-        textValue.pop()
+
+        let backspace = textValue.pop("*")
+
+        if (backspace === true) {
+            textEl.value = [value]
+        }
         textValue.pop()
         activePercentage = false
         console.log(textValue);
-
     } else {
         textValue.pop()
         console.log(textValue);
     }
+    console.log(textEl.value);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // let last = textValue.pop()
 
