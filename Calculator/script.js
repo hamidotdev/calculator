@@ -113,29 +113,29 @@ buttons.forEach(button =>{
             }
         } 
 
-        else if (value === "()") {
-            if (openBracket === true) {
-                if (/\d|\)/.test(textValue[textValue.length - 1])) {
-                    textValue.push("*")
-                }
+        // else if (value === "()") {
+        //     if (openBracket === true) {
+        //         if (/\d|\)/.test(textValue[textValue.length - 1])) {
+        //             textValue.push("*")
+        //         }
 
-                textValue.push("(")
-                textEl.value += "("
-            } 
-            else {
-                textValue.push(")")
-                textEl.value += (")")
-            }
+        //         textValue.push("(")
+        //         textEl.value += "("
+        //     } 
+        //     else {
+        //         textValue.push(")")
+        //         textEl.value += (")")
+        //     }
 
-            openBracket = !openBracket
+        //     openBracket = !openBracket
 
-            try {
-                let result = textValue.join("")
-                answer.textContent = result
-            } catch (error) {
-                answer.textContent = ""
-            }
-        }
+        //     try {
+        //         let result = textValue.join("")
+        //         answer.textContent = result
+        //     } catch (error) {
+        //         answer.textContent = ""
+        //     }
+        // }
 
         else if (value === "%") {
             activePercentage = true
@@ -169,21 +169,38 @@ buttons.forEach(button =>{
 deletes.addEventListener('click', function(){
     if (activePercentage === true) {
 
-        let backspace = textValue.pop("*")
+        // let backspace = textValue.pop("*")
 
-        if (backspace === true) {
-            textEl.value = [value]
-        }
+        // if (backspace === true) {
+
+        // }
         textValue.pop()
+        // Accessing the second to the last value of the array
+        let lastIndex = textValue.length - 1;
+        let decimal = textValue[lastIndex]
+        let result = (Number(decimal) * 100)
+        let expression = result.toString()
+        textValue = [expression]
+        textEl.value = result
+        let calculation = eval(textValue.join(""))
+        answer.textContent = calculation
         activePercentage = false
+        console.log(expression);
         console.log(textValue);
+        
     } else {
         textValue.pop()
+        let deleteValue = textValue.join("")
+        textEl.value = deleteValue
         console.log(textValue);
+        try {
+            let result = eval(deleteValue)
+            answer.textContent = result
+        } catch (error) {
+            answer.textContent = ""
+        }
     }
     console.log(textEl.value);
-
-
 
 
 
@@ -222,15 +239,4 @@ deletes.addEventListener('click', function(){
     // } else if (last === ")") {
     //     openBracket = false
     // }
-
-
-    let deleteValue = textValue.join("")
-    textEl.value = deleteValue
-
-    try {
-        let result = eval(deleteValue)
-        answer.textContent = result
-    } catch (error) {
-        answer.textContent = ""
-    }
 })
