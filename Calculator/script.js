@@ -185,6 +185,8 @@ deletes.addEventListener('click', function(){
             textValue.pop()
             console.log(textValue);
         }
+
+        
         let deleteValue = textValue.join("")
         textEl.value = deleteValue
         try {
