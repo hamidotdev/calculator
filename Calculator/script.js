@@ -160,23 +160,38 @@ buttons.forEach(button =>{
 // Delete handlings
 deletes.addEventListener('click', function(){
 
+    // Check if the array is empty, then exits the function
     if (textValue.length === 0) return;
+
     if (activePercentage === true) {
 
-        textValue.pop()
-        // Accessing the second to the last value of the array
-        let lastIndex = textValue.length - 1;
-        let decimal = textValue[lastIndex]
-        let result = (Number(decimal) * 100.00001)
-        let results = Math.floor(result)
-        let expression = results.toString()
-        textValue = [expression]
-        textEl.value = results
-        let calculation = eval(textValue.join(""))
-        answer.textContent = calculation
         activePercentage = false
-        console.log(expression);
-        console.log(textValue);
+
+        let currentValue = parseFloat(textValue[0])
+        let originalValue = currentValue * 100
+        
+        textValue = [originalValue.toString()]
+        textEl.value = textValue[0]
+
+        try {
+            answer.textContent = eval(textValue.join(""))
+        } catch (error) {
+            answer.textContent = ""
+        }
+        // textValue.pop()
+        // // Accessing the second to the last value of the array
+        // let lastIndex = textValue.length - 1;
+        // let decimal = textValue[lastIndex]
+        // let result = (Number(decimal) * 100.00001)
+        // let results = Math.floor(result)
+        // let expression = results.toString()
+        // textValue = [expression]
+        // textEl.value = results
+        // let calculation = eval(textValue.join(""))
+        // answer.textContent = calculation
+        // activePercentage = false
+        // console.log(expression);
+        // console.log(textValue);
         
     } else { 
         let lastIndex = textValue[textValue.length - 1]
