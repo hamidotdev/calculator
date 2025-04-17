@@ -54,3 +54,33 @@ if (index !== -1) {
 
 console.log(array); // Output: ["apple", "orange", "cherry"]
 Feel free to choose the method that best suits your needs! If you have any more questions or need further assistance, I'm here to help.
+
+
+try {
+    let result = eval(textValue.join(""))
+    let percentValue = result / 100
+
+    // Update the input display
+    textEl.value += value
+    answer.textContent = percentValue
+
+    // Update the current value into a string
+    textValue = [percentValue.toString()]
+    activePercentage = true
+    console.log(result);
+    console.log(textValue);
+} catch (error) {
+    answer.textContent = "Error"
+    errorEffect = true
+}
+
+            
+activePercentage = true
+textValue.push("/ 100")
+result = textValue.join("")
+let evaluate = eval(result)
+textEl.value += value
+answer.textContent = evaluate
+textValue = [evaluate.toString()]
+textValue.push("*")
+console.log(textValue);
