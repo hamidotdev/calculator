@@ -176,7 +176,7 @@ deletes.addEventListener('click', function(){
         console.log(expression);
         console.log(textValue);
         
-    } else {
+    } else { 
         let lastIndex = textValue[textValue.length - 1]
         if (textValue.length === 1) {
             textValue[textValue.length - 1] = lastIndex.slice(0, -1)
@@ -185,7 +185,6 @@ deletes.addEventListener('click', function(){
             textValue.pop()
             console.log(textValue);
         }
-
         
         let deleteValue = textValue.join("")
         textEl.value = deleteValue
@@ -195,7 +194,6 @@ deletes.addEventListener('click', function(){
         } catch (error) {
             answer.textContent = ""
         }
-        console.log(deleteValue);
     }
 
 
