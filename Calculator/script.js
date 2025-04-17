@@ -159,6 +159,8 @@ buttons.forEach(button =>{
 
 // Delete handlings
 deletes.addEventListener('click', function(){
+
+    if (textValue.length === 0) return;
     if (activePercentage === true) {
 
         textValue.pop()
