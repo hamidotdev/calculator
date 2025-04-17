@@ -131,22 +131,24 @@ buttons.forEach(button =>{
 
         else if (value === "%") {
 
+            
+            // try {
+            //     let result = eval(textValue.join(""))
+            //     let percentValue = result / 100
 
-            try {
-                let result = eval(textValue.join(""))
-                let percentValue = result / 100
+            //     // Update the input display
+            //     textEl.value += value
+            //     answer.textContent = percentValue
 
-                // Update the input display
-                textEl.value += value
-                answer.textContent = percentValue
-
-                // Update the current value into a string
-                textValue = [percentValue.toString()]
-                activePercentage = true
-            } catch (error) {
-                answer.textContent = "Error"
-                errorEffect = true
-            }
+            //     // Update the current value into a string
+            //     textValue = [percentValue.toString()]
+            //     activePercentage = true
+            //     console.log(result);
+            //     console.log(textValue);
+            // } catch (error) {
+            //     answer.textContent = "Error"
+            //     errorEffect = true
+            // }
             // activePercentage = true
             // textValue.push("/ 100")
             // result = textValue.join("")
@@ -237,24 +239,6 @@ deletes.addEventListener('click', function(){
         } catch (error) {
             answer.textContent = ""
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         // if (textValue.length === 1) {
         //     textValue[textValue.length - 1] = lastIndex.slice(0, -1)
         //     console.log(textValue);
@@ -272,37 +256,6 @@ deletes.addEventListener('click', function(){
         //     answer.textContent = ""
         // }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // let last = textValue.pop()
 
     // if (last === "(") {
@@ -310,4 +263,9 @@ deletes.addEventListener('click', function(){
     // } else if (last === ")") {
     //     openBracket = false
     // }
+
+    if (textValue.length === 0) {
+        textEl.value = ""
+        answer.textContent = ""
+    }
 })
