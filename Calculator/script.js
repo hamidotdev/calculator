@@ -133,7 +133,26 @@ buttons.forEach(button =>{
             }
         }
 
+        // else if (value === "()") {
+        //     openBracket = true
+        //     if (openBracket === true) {
+        //         if (/\d|\)/.test(textValue[textValue.length - 1])) {
+        //             textValue.push("*")
+        //         }
+        //         textEl.value += "("
+        //         openBracket = false
+        //     }
+        //     else {
+        //         textValue += ")"
+        //     }
+        // }
+
         else if (value === "()") {
+            openBracket = true
+            if (openBracket === true) {
+                textValue.push("*")
+                textEl.value += "("
+            } 
             
         }
 
