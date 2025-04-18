@@ -29,10 +29,11 @@ let evaluatedColor = false
 let activeParenthesis = false
 let activePercentage = false
 let openBracket = false
+let bracketValue = []
 
 // Helper Function: To check if the value clicked is an operator
 function isOperator(char) {
-    return ["+", "-", "*", "/", "%", "()"].includes(char)
+    return ["+", "-", "*", "/", "%"].includes(char)
 }
 
 
@@ -52,6 +53,7 @@ buttons.forEach(button =>{
             evaluatedColor = false
             activePercentage = false
             activeParenthesis = false
+            openBracket = false
         }
         else if (value === "="){
             activePercentage = false
@@ -151,12 +153,31 @@ buttons.forEach(button =>{
             if (openBracket === false) {
                 textValue.push("*")
                 textEl.value += "("
+                let displayValue = textValue.join("")
+
+                if (isOperator(value)) {
+                    let replaceValue = displayValue.replace("*", "(")
+                    textEl.value = replaceValue
+                    bracketValue.push(value)
+                    let expression = bracketValue.join("")
+
+                    try {
+                        let result = eval(expression).toString()
+                        textValue.push(result)
+                        let bracketSolved = textValue.join("")
+                        let finalResult = eval(bracketSolved)
+                        answer.textContent = finalResult
+
+                    } catch (error) {
+                        answer.textContent = ""
+                    }
+                }
                 openBracket = true
-            } 
+            }
             else if (openBracket === true) {
                 textEl.value += ")"
+                textValue.push("*")
             }
-
         }
 
         if (errorEffect === true) {
