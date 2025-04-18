@@ -79,6 +79,14 @@ buttons.forEach(button =>{
         else if (validInput.includes(value)) {
             evaluatedColor = false
             activePercentage = false
+            
+            
+            if (textValue[textValue.length - 1] === "%" && textValue[textValue.length - 1] !== "=") {
+                textValue.push("*")
+                textEl.value += "*"
+                console.log(textValue);
+            }
+
             if (justEvaluated === true) {
                 if (!isOperator(value)) {
                     textValue = [value]
@@ -95,42 +103,17 @@ buttons.forEach(button =>{
             }
 
             if (!isOperator(value)) {
-
-                
                 try {
-                    result = textValue.join("")
+                    result = textValue.join("").replace(/%/g, "/100")
                     let expression = eval(result)
                     answer.textContent = expression
                 } catch (error) {
                     answer.textContent = ""
                 }
                 errorEffect = false
+                console.log(textValue);
             }
-        } 
-
-        // else if (value === "()") {
-        //     if (openBracket === true) {
-        //         if (/\d|\)/.test(textValue[textValue.length - 1])) {
-        //             textValue.push("*")
-        //         }
-
-        //         textValue.push("(")
-        //         textEl.value += "("
-        //     } 
-        //     else {
-        //         textValue.push(")")
-        //         textEl.value += (")")
-        //     }
-
-        //     openBracket = !openBracket
-
-        //     try {
-        //         let result = textValue.join("")
-        //         answer.textContent = result
-        //     } catch (error) {
-        //         answer.textContent = ""
-        //     }
-        // }
+        }
 
         else if (value === "%" && textValue[textValue.length - 1] !== "%") {
 
@@ -148,6 +131,10 @@ buttons.forEach(button =>{
             } catch (error) {
                 answer.textContent = ""
             }
+        }
+
+        else if (value === "()") {
+            
         }
 
         if (errorEffect === true) {
@@ -172,8 +159,17 @@ deletes.addEventListener('click', function(){
     // Check if the array is empty, then exits the function
     if (textValue.length === 0) return;
 
+    let lastChar = textValue[textValue.length - 1]
+    let secondLastChar = textValue[textValue.length - 2]
 
-    textValue.pop()
+    // If the percent and multiply operator are close together
+    if (lastChar === "*" && secondLastChar === "%") {
+        textValue.pop()
+        textValue.pop()
+    } else {
+        textValue.pop()
+    }
+
     let deletedValues = textValue.join("")
     textEl.value = deletedValues
     try {
@@ -188,89 +184,4 @@ deletes.addEventListener('click', function(){
         textEl.value = ""
         answer.textContent = ""
     }
-
-    // if (activePercentage === true) {
-
-    //     activePercentage = false
-
-    //     let currentValue = parseFloat(textValue[0])
-    //     let originalValue = currentValue * 100
-        
-    //     textValue = [originalValue.toString()]
-    //     textEl.value = textValue[0]
-
-    //     try {
-    //         answer.textContent = eval(textValue.join(""))
-    //     } catch (error) {
-    //         answer.textContent = ""
-    //     }
-    //     // textValue.pop()
-    //     // // Accessing the second to the last value of the array
-    //     // let lastIndex = textValue.length - 1;
-    //     // let decimal = textValue[lastIndex]
-    //     // let result = (Number(decimal) * 100.00001)
-    //     // let results = Math.floor(result)
-    //     // let expression = results.toString()
-    //     // textValue = [expression]
-    //     // textEl.value = results
-    //     // let calculation = eval(textValue.join(""))
-    //     // answer.textContent = calculation
-    //     // activePercentage = false
-    //     // console.log(expression);
-    //     // console.log(textValue);
-        
-    // } 
-    // else { 
-    //     // The last element in the array
-    //     let lastValue = textValue[textValue.length - 1]
-
-    //     // Delete the element/character if the array is empty or a single character
-    //     if (!lastValue || lastValue.length <= 1) {
-    //         textValue.pop()
-    //     }
-    //     else {
-    //         textValue[textValue.length - 1] = lastValue.slice(0, -1)
-    //     }
-
-    //     // Update the display
-    //     let displayValue = textValue.join("")
-    //     textEl.value = displayValue
-
-    //     // Update the calculation
-    //     try {
-    //         if (displayValue) {
-    //             let result = eval(displayValue)
-    //             answer.textContent = result
-    //         } else {
-    //             answer.textContent = ""
-    //         }
-    //     } catch (error) {
-    //         answer.textContent = ""
-    //     }
-
-
-    //     // if (textValue.length === 1) {
-    //     //     textValue[textValue.length - 1] = lastIndex.slice(0, -1)
-    //     //     console.log(textValue);
-    //     // } else {
-    //     //     textValue.pop()
-    //     //     console.log(textValue);
-    //     // }
-        
-    //     // let deleteValue = textValue.join("")
-    //     // textEl.value = deleteValue
-    //     // try {
-    //     //     let result = eval(deleteValue)
-    //     //     answer.textContent = result
-    //     // } catch (error) {
-    //     //     answer.textContent = ""
-    //     // }
-    // }
-    // let last = textValue.pop()
-
-    // if (last === "(") {
-    //     openBracket = true
-    // } else if (last === ")") {
-    //     openBracket = false
-    // }
 })

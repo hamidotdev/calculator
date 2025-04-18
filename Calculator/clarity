@@ -56,6 +56,9 @@ console.log(array); // Output: ["apple", "orange", "cherry"]
 Feel free to choose the method that best suits your needs! If you have any more questions or need further assistance, I'm here to help.
 
 
+
+
+
 try {
     let result = eval(textValue.join(""))
     let percentValue = result / 100
@@ -84,3 +87,125 @@ answer.textContent = evaluate
 textValue = [evaluate.toString()]
 textValue.push("*")
 console.log(textValue);
+
+
+
+
+
+
+
+if (activePercentage === true) {
+
+        activePercentage = false
+
+        let currentValue = parseFloat(textValue[0])
+        let originalValue = currentValue * 100
+        
+        textValue = [originalValue.toString()]
+        textEl.value = textValue[0]
+
+        try {
+            answer.textContent = eval(textValue.join(""))
+        } catch (error) {
+            answer.textContent = ""
+        }
+        // textValue.pop()
+        // // Accessing the second to the last value of the array
+        // let lastIndex = textValue.length - 1;
+        // let decimal = textValue[lastIndex]
+        // let result = (Number(decimal) * 100.00001)
+        // let results = Math.floor(result)
+        // let expression = results.toString()
+        // textValue = [expression]
+        // textEl.value = results
+        // let calculation = eval(textValue.join(""))
+        // answer.textContent = calculation
+        // activePercentage = false
+        // console.log(expression);
+        // console.log(textValue);
+        
+    } 
+    else { 
+        // The last element in the array
+        let lastValue = textValue[textValue.length - 1]
+
+        // Delete the element/character if the array is empty or a single character
+        if (!lastValue || lastValue.length <= 1) {
+            textValue.pop()
+        }
+        else {
+            textValue[textValue.length - 1] = lastValue.slice(0, -1)
+        }
+
+        // Update the display
+        let displayValue = textValue.join("")
+        textEl.value = displayValue
+
+        // Update the calculation
+        try {
+            if (displayValue) {
+                let result = eval(displayValue)
+                answer.textContent = result
+            } else {
+                answer.textContent = ""
+            }
+        } catch (error) {
+            answer.textContent = ""
+        }
+
+
+        // if (textValue.length === 1) {
+        //     textValue[textValue.length - 1] = lastIndex.slice(0, -1)
+        //     console.log(textValue);
+        // } else {
+        //     textValue.pop()
+        //     console.log(textValue);
+        // }
+        
+        // let deleteValue = textValue.join("")
+        // textEl.value = deleteValue
+        // try {
+        //     let result = eval(deleteValue)
+        //     answer.textContent = result
+        // } catch (error) {
+        //     answer.textContent = ""
+        // }
+    }
+    let last = textValue.pop()
+
+    if (last === "(") {
+        openBracket = true
+    } else if (last === ")") {
+        openBracket = false
+    }
+
+
+
+
+
+
+
+
+else if (value === "()") {
+            if (openBracket === true) {
+                if (/\d|\)/.test(textValue[textValue.length - 1])) {
+                    textValue.push("*")
+                }
+
+                textValue.push("(")
+                textEl.value += "("
+            } 
+            else {
+                textValue.push(")")
+                textEl.value += (")")
+            }
+
+            openBracket = !openBracket
+
+            try {
+                let result = textValue.join("")
+                answer.textContent = result
+            } catch (error) {
+                answer.textContent = ""
+            }
+        }
