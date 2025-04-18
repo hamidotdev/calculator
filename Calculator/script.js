@@ -28,7 +28,7 @@ let errorEffect = false
 let evaluatedColor = false
 let activeParenthesis = false
 let activePercentage = false
-let openBracket = true
+let openBracket = false
 
 // Helper Function: To check if the value clicked is an operator
 function isOperator(char) {
@@ -148,12 +148,15 @@ buttons.forEach(button =>{
         // }
 
         else if (value === "()") {
-            openBracket = true
-            if (openBracket === true) {
+            if (openBracket === false) {
                 textValue.push("*")
                 textEl.value += "("
+                openBracket = true
             } 
-            
+            else if (openBracket === true) {
+                textEl.value += ")"
+            }
+
         }
 
         if (errorEffect === true) {
