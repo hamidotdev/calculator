@@ -82,6 +82,7 @@ buttons.forEach(button =>{
             evaluatedColor = false
             activePercentage = false
             
+            let lastChar = textValue[textValue.length - 1]
             
             if (textValue[textValue.length - 1] === "%" && textValue[textValue.length - 1] !== "=") {
                 textValue.push("*")
@@ -102,6 +103,11 @@ buttons.forEach(button =>{
             else {
                 textValue.push(value)
                 textEl.value += value
+            }
+            
+            if (lastChar === ")" || lastChar === "%") {
+                textValue.push("*")
+                textEl.value += "*"
             }
 
             if (!isOperator(value)) {
@@ -135,6 +141,7 @@ buttons.forEach(button =>{
             }
         }
 
+
         // else if (value === "()") {
         //     openBracket = true
         //     if (openBracket === true) {
@@ -149,34 +156,62 @@ buttons.forEach(button =>{
         //     }
         // }
 
+        // else if (value === "()") {
+        //     if (openBracket === false) {
+        //         textValue.push("*")
+        //         textEl.value += "("
+        //         let displayValue = textValue.join("")
+
+        //         if (isOperator(value)) {
+        //             let replaceValue = displayValue.replace("*", "(")
+        //             textEl.value = replaceValue
+        //             bracketValue.push(value)
+        //             let expression = bracketValue.join("")
+
+        //             try {
+        //                 let result = eval(expression).toString()
+        //                 textValue.push(result)
+        //                 let bracketSolved = textValue.join("")
+        //                 let finalResult = eval(bracketSolved)
+        //                 answer.textContent = finalResult
+
+        //             } catch (error) {
+        //                 answer.textContent = ""
+        //             }
+        //         }
+        //         openBracket = true
+        //     }
+        //     else if (openBracket === true) {
+        //         textEl.value += ")"
+        //         textValue.push("*")
+        //     }
+        // }
+
+
         else if (value === "()") {
+            let lastChar = textValue[textValue.length - 1]
             if (openBracket === false) {
-                textValue.push("*")
-                textEl.value += "("
-                let displayValue = textValue.join("")
 
-                if (isOperator(value)) {
-                    let replaceValue = displayValue.replace("*", "(")
-                    textEl.value = replaceValue
-                    bracketValue.push(value)
-                    let expression = bracketValue.join("")
-
-                    try {
-                        let result = eval(expression).toString()
-                        textValue.push(result)
-                        let bracketSolved = textValue.join("")
-                        let finalResult = eval(bracketSolved)
-                        answer.textContent = finalResult
-
-                    } catch (error) {
-                        answer.textContent = ""
-                    }
+                if(/\d|\)|%/.test(lastChar)) {
+                    textValue.push("*")
+                    textEl.value += "*"
                 }
+                textEl.value += "("
+                textValue.push("(")
                 openBracket = true
             }
-            else if (openBracket === true) {
+            else {
                 textEl.value += ")"
-                textValue.push("*")
+                textValue.push(")")
+                openBracket = false
+            }
+
+            try {
+                let result = textValue.join("").replace(/%/g, "/100")
+                let expression = eval(result)
+                answer.textContent = expression
+            } catch (error) {
+                answer.textContent = ""
             }
         }
 
