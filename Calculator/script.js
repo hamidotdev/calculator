@@ -83,22 +83,22 @@ buttons.forEach(button =>{
             activePercentage = false
             let lastChar = textValue[textValue.length - 1]
             
-            if (lastChar === ")" || lastChar === "%") {
+            if (lastChar === ")") {
                 textValue.push("*")
                 textEl.value += "*"
+                console.log(textValue);
             }
 
 
-            // if (textValue[textValue.length - 1] === "%") {
-
-            //     if (!isOperator(value)) {  
-            //         textValue.push("*")
-            //         // textEl.value += "*"
-            //         console.log(textValue);
-            //     } else {
-            //         textEl.value += value
-            //     }
-            // }
+            if (lastChar === "%" && lastChar !== "*") { 
+                if (isOperator(value)) {
+                    
+                } else {
+                    textValue.push("*")
+                    textEl.value += "*"
+                    console.log(textValue);
+                }
+            }
 
             if (justEvaluated === true) {
                 if (!isOperator(value)) {
