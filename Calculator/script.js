@@ -28,8 +28,7 @@ let errorEffect = false
 let evaluatedColor = false
 let activeParenthesis = false
 let activePercentage = false
-let openBracket = false
-let bracketValue = []
+let bracketCount = 0
 
 // Helper Function: To check if the value clicked is an operator
 function isOperator(char) {
@@ -41,7 +40,7 @@ buttons.forEach(button =>{
     button.addEventListener('click', function(){
         let value = button.textContent
 
-        let validInput = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "-", "+", "*", "/"]
+        let validInput = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "-", "+", "*", "/"]
         let result = textValue.join("")
 
         if (value === "C") {
@@ -83,14 +82,22 @@ buttons.forEach(button =>{
             activePercentage = false
             let lastChar = textValue[textValue.length - 1]
             
+            if (openBracket === true) {
+                openBracket = true
+            } else {
+                openBracket = false
+            }
+
             if (lastChar === ")") {
-                textValue.push("*")
-                textEl.value += "*"
+                if (!isOperator(value)) {
+                    textValue.push("*")
+                    textEl.value += "*"
+                }
                 console.log(textValue);
             }
 
 
-            if (lastChar === "%" && lastChar !== "*") { 
+            if (value.match(/\d/) && lastChar === "%" && lastChar !== "*") { 
                 if (isOperator(value)) {
                     
                 } else {
@@ -148,23 +155,20 @@ buttons.forEach(button =>{
 
         else if (value === "()") {
             let lastChar = textValue[textValue.length - 1]
-            if (openBracket === false) {
 
-                // If the last input is a number, % or ), insert * before (
-                if(/\d|\)|%/.test(lastChar)) {
+            if (bracketCount > 0 && (lastChar !== "(" && lastChar !== undefined)) {
+                textEl.value += ")"
+                textValue.push(")")
+                bracketCount -= 1
+            } else {
+                if(/\d|\)|%/.test(lastChar)){
                     textValue.push("*")
                     textEl.value += "*"
                 }
+
                 textEl.value += "("
                 textValue.push("(")
-                openBracket = true
-            }
-            else {
-                if (textValue[textValue.length - 1] === ")") return;
-
-                textEl.value += ")"
-                textValue.push(")")
-                openBracket = false
+                bracketCount += 1
             }
 
             try {
@@ -173,6 +177,12 @@ buttons.forEach(button =>{
                 answer.textContent = expression
             } catch (error) {
                 answer.textContent = ""
+            }
+        }
+
+        else if (value === "+/-") {
+            if (textEl.value) {
+                
             }
         }
 
@@ -188,6 +198,7 @@ buttons.forEach(button =>{
         } else {
             textEl.style.color = "brown"
         }
+        console.log(openBracket);
     })
 })
 
@@ -197,6 +208,14 @@ deletes.addEventListener('click', function(){
 
     // Check if the array is empty, then exits the function
     if (textValue.length === 0) return;
+    
+    if (openBracket === true) {
+        openBracket = true
+        console.log(openBracket);
+    } else {
+        openBracket = false
+        console.log(openBracket);
+    }
 
     let lastChar = textValue[textValue.length - 1]
     let secondLastChar = textValue[textValue.length - 2]
@@ -206,7 +225,13 @@ deletes.addEventListener('click', function(){
         textValue.pop()
         textValue.pop()
     } else {
-        textValue.pop()
+        let remove = textValue.pop()
+
+        if(remove === ")") {
+            bracketCount += 1
+        } else if (remove === "(") {
+            bracketCount -= 1
+        }
     }
 
     let deletedValues = textValue.join("")
@@ -223,4 +248,5 @@ deletes.addEventListener('click', function(){
         textEl.value = ""
         answer.textContent = ""
     }
+    console.log(textValue);
 })
