@@ -180,6 +180,11 @@ buttons.forEach(button =>{
             try {
                 let result = eval(textValue.join(""))
                 answer.textContent = result
+                if (isNaN(result)) {
+                    textEl.value = ""
+                    answer.textContent = "Error"
+                    errorEffect = true
+                }
             } catch (error) {
                 answer.textContent = ""
             }
