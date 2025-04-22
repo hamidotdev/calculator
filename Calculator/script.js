@@ -146,7 +146,7 @@ buttons.forEach(button =>{
             }
         }
 
-        else if (value === "()" || minusOrPlus === true) {
+        else if (value === "()") {
             let lastChar = textValue[textValue.length - 1]
 
             if (bracketCount > 0 && (lastChar !== "(" && lastChar !== undefined)) {
@@ -174,14 +174,14 @@ buttons.forEach(button =>{
         }
 
         else if (value === "+/-") {
-            minusOrPlus = true
             let inputValue = textEl.value
             textEl.value = inputValue * -1
-            textValue = [inputValue]
+            textValue = [textEl.value]
             try {
-                
+                let result = eval(textValue.join(""))
+                answer.textContent = result
             } catch (error) {
-                
+                answer.textContent = ""
             }
         }
 
