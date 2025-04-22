@@ -14,7 +14,6 @@ let divide = document.getElementById('divide')
 let plus = document.getElementById('plus')
 let multiply = document.getElementById('multiply')
 let minus = document.getElementById('minus')
-let plusOrMinus = document.getElementById('plusOrMinus')
 let zero = document.getElementById('zero')
 let dot = document.getElementById('dot')
 let equals = document.getElementById('equals')
@@ -29,6 +28,7 @@ let evaluatedColor = false
 let activeParenthesis = false
 let activePercentage = false
 let bracketCount = 0
+let minusOrPlus = false
 
 // Helper Function: To check if the value clicked is an operator
 function isOperator(char) {
@@ -52,7 +52,6 @@ buttons.forEach(button =>{
             evaluatedColor = false
             activePercentage = false
             activeParenthesis = false
-            openBracket = false
         }
         else if (value === "="){
             activePercentage = false
@@ -81,12 +80,6 @@ buttons.forEach(button =>{
             evaluatedColor = false
             activePercentage = false
             let lastChar = textValue[textValue.length - 1]
-            
-            if (openBracket === true) {
-                openBracket = true
-            } else {
-                openBracket = false
-            }
 
             if (lastChar === ")") {
                 if (!isOperator(value)) {
@@ -153,7 +146,7 @@ buttons.forEach(button =>{
             }
         }
 
-        else if (value === "()") {
+        else if (value === "()" || minusOrPlus === true) {
             let lastChar = textValue[textValue.length - 1]
 
             if (bracketCount > 0 && (lastChar !== "(" && lastChar !== undefined)) {
@@ -181,7 +174,13 @@ buttons.forEach(button =>{
         }
 
         else if (value === "+/-") {
-            if (textEl.value) {
+            minusOrPlus = true
+            let inputValue = textEl.value
+            textEl.value = inputValue * -1
+            textValue = [inputValue]
+            try {
+                
+            } catch (error) {
                 
             }
         }
@@ -198,7 +197,6 @@ buttons.forEach(button =>{
         } else {
             textEl.style.color = "brown"
         }
-        console.log(openBracket);
     })
 })
 
@@ -208,14 +206,6 @@ deletes.addEventListener('click', function(){
 
     // Check if the array is empty, then exits the function
     if (textValue.length === 0) return;
-    
-    if (openBracket === true) {
-        openBracket = true
-        console.log(openBracket);
-    } else {
-        openBracket = false
-        console.log(openBracket);
-    }
 
     let lastChar = textValue[textValue.length - 1]
     let secondLastChar = textValue[textValue.length - 2]
