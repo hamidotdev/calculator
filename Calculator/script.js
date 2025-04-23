@@ -81,6 +81,7 @@ buttons.forEach(button =>{
             activePercentage = false
             let lastChar = textValue[textValue.length - 1]
 
+            
             if (lastChar === ")") {
                 if (!isOperator(value)) {
                     textValue.push("*")
@@ -111,8 +112,18 @@ buttons.forEach(button =>{
                 justEvaluated = false
             }
             else {
-                textValue.push(value)
-                textEl.value += value
+                if (textValue.length === 1 && textValue[0] === "0" && value.match(/\d/)) {
+                    textValue = [value]
+                    textEl.value = value
+                } else {
+                    if (isOperator(value)) {
+                        if (textValue[textValue.length - 1] === "0") {
+                            textEl.value = value
+                        }
+                    }
+                    textValue.push(value)
+                    textEl.value += value
+                }
             }
 
             if (!isOperator(value)) {
