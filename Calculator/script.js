@@ -115,12 +115,16 @@ buttons.forEach(button =>{
                 if (textValue.length === 1 && textValue[0] === "0" && value.match(/\d/)) {
                     textValue = [value]
                     textEl.value = value
+                } else if (
+                    textValue.length >= 2 && 
+                    isOperator(textValue[textValue.length - 2]) && 
+                    textValue[textValue.length - 1] === "0" && 
+                    value.match(/\d/) && 
+                    value !== ".") {
+                    textValue.pop()
+                    textValue.push(value)
+                    textEl.value = textValue.join("")
                 } else {
-                    if (isOperator(value)) {
-                        if (textValue[textValue.length - 1] === "0") {
-                            textEl.value = value
-                        }
-                    }
                     textValue.push(value)
                     textEl.value += value
                 }
